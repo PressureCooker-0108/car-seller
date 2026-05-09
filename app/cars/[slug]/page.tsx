@@ -16,7 +16,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const car = getCarBySlug(params.slug)
+  const { slug } = await params
+  const car = getCarBySlug(slug)
   if (!car) return { title: 'Car Not Found' }
 
   return {
@@ -29,8 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-export default function CarPage({ params }: Props) {
-  const car = getCarBySlug(params.slug)
+export default async function CarPage({ params }: Props) {
+  const { slug } = await params
+  const car = getCarBySlug(slug)
   if (!car) notFound()
 
   const related = getRelatedCars(car, 3)

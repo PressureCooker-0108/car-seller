@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronDown, ChevronUp, Fuel, Gauge, User, Calendar, Settings2, Users, MessageCircle, Instagram, Phone } from 'lucide-react'
+import { ChevronDown, ChevronUp, Fuel, Gauge, User, Calendar, Settings2, Users, MessageCircle, Instagram, Phone, Zap, Activity, ShieldCheck, Wrench, Cpu } from 'lucide-react'
 import type { CarType } from '@/data/cars'
 import { formatPrice, formatKM } from '@/lib/utils'
 import { buildWhatsAppURL, carEnquiryMessage, instagramDMURL } from '@/lib/whatsapp'
@@ -76,13 +76,19 @@ export function CarDetailClient({ car, related }: Props) {
 
   const specs = [
     { icon: <Fuel size={14} />, label: 'Fuel', value: car.fuel },
-    { icon: <Gauge size={14} />, label: 'Mileage', value: formatKM(car.km) },
+    { icon: <Gauge size={14} />, label: 'Driven', value: formatKM(car.km) },
     { icon: <User size={14} />, label: 'Ownership', value: car.ownership },
     { icon: <Calendar size={14} />, label: 'Year', value: String(car.year) },
     { icon: <Settings2 size={14} />, label: 'Transmission', value: car.transmission },
     { icon: <Users size={14} />, label: 'Seats', value: `${car.seats} Seats` },
     { icon: <Calendar size={14} />, label: 'Reg.', value: car.registration },
     { icon: <Calendar size={14} />, label: 'Number', value: `XX-${car.carNumber}` },
+    { icon: <Cpu size={14} />, label: 'Engine', value: car.engine },
+    { icon: <Zap size={14} />, label: 'Power', value: car.power },
+    { icon: <Activity size={14} />, label: 'Torque', value: car.torque },
+    { icon: <Fuel size={14} />, label: 'Mileage', value: car.mileageARAI },
+    { icon: <ShieldCheck size={14} />, label: 'Insurance', value: car.insurance },
+    { icon: <Wrench size={14} />, label: 'Last Service', value: car.lastService },
   ]
 
   return (
