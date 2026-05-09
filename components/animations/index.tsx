@@ -158,10 +158,23 @@ interface CountUpProps {
   className?: string
 }
 export function CountUp({ target, prefix = '', suffix = '', duration = 2, className }: CountUpProps) {
-  const ref = useRef(null)
-  const inView = useInView(ref, { once: true, margin: '-40px' })
+  const ref = useRef<HTMLSpanElement>(null)
   const [count, setCount] = useState(0)
+  const [inView, setInView] = useState(false)
   const reduced = useReducedMotion()
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setInView(true)
+        observer.disconnect()
+      }
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     if (!inView) return

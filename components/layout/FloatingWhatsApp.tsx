@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { MessageCircle } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/config'
 import { buildWhatsAppURL, genericEnquiryMessage } from '@/lib/whatsapp'
-import { trackCTAClick } from '@/lib/analytics'
+import { trackCTAClick } from '@/lib/db/analytics'
 
 export function FloatingWhatsApp() {
   const pathname = usePathname()

@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { CarDetailClient } from './CarDetailClient'
-import { allCars, getCarBySlug, getRelatedCars } from '@/data/cars'
+import { fetchCars, fetchCarBySlug, fetchRelatedCars } from '@/lib/db/cars'
 import { SITE_CONFIG } from '@/lib/config'
 import { formatPrice } from '@/lib/utils'
 
@@ -12,12 +12,13 @@ interface Props {
 }
 
 export async function generateStaticParams() {
+  const allCars = await fetchCars()
   return allCars.map(car => ({ slug: car.slug }))
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const car = getCarBySlug(slug)
+  const car = await fetchCarBySlug(slug)
   if (!car) return { title: 'Car Not Found' }
 
   return {
@@ -32,10 +33,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function CarPage({ params }: Props) {
   const { slug } = await params
-  const car = getCarBySlug(slug)
+  const car = await fetchCarBySlug(slug)
   if (!car) notFound()
 
-  const related = getRelatedCars(car, 3)
+  const related = await fetchRelatedCars(car, 3)
 
   return (
     <>

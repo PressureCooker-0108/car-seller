@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Search } from 'lucide-react'
-import { trackFilterUsed } from '@/lib/analytics'
+import { trackFilterUsed } from '@/lib/db/analytics'
 
 const BRANDS = ['Mercedes-Benz', 'BMW', 'Range Rover', 'Porsche', 'Audi', 'Lamborghini', 'Volvo', 'Lexus']
 const BODY_TYPES = ['Sedan', 'SUV', 'Coupe', 'Hatchback', 'Convertible', 'Wagon']

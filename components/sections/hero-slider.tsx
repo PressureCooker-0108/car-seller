@@ -6,7 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { buildWhatsAppURL, genericEnquiryMessage } from '@/lib/whatsapp'
-import { trackCTAClick } from '@/lib/analytics'
+import { trackCTAClick } from '@/lib/db/analytics'
 
 const SLIDES = [
   {

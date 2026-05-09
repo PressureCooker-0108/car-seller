@@ -7,7 +7,7 @@ import { ChevronDown, ChevronUp, Fuel, Gauge, User, Calendar, Settings2, Users, 
 import type { CarType } from '@/data/cars'
 import { formatPrice, formatKM } from '@/lib/utils'
 import { buildWhatsAppURL, carEnquiryMessage, instagramDMURL } from '@/lib/whatsapp'
-import { trackCarView, trackCTAClick } from '@/lib/analytics'
+import { trackCarView, trackCTAClick } from '@/lib/db/analytics'
 import { CarCard, getCarImage } from '@/components/ui/CarCard'
 import { FadeUp, FadeIn } from '@/components/animations'
 import { SITE_CONFIG } from '@/lib/config'
@@ -197,6 +197,8 @@ export function CarDetailClient({ car, related }: Props) {
             <div className="space-y-2">
               {FEATURE_SECTIONS.map(section => {
                 const items = car[section.key] as string[]
+                if (!items || items.length === 0) return null
+                
                 const isOpen = openSection === section.key
                 return (
                   <div
@@ -204,7 +206,7 @@ export function CarDetailClient({ car, related }: Props) {
                     style={{
                       background: 'var(--bg-card)',
                       border: `1px solid ${isOpen ? 'var(--gold-border)' : 'var(--border)'}`,
-                      borderLeft: isOpen ? '3px solid var(--gold)' : '1px solid var(--border)',
+                      borderLeft: isOpen ? '2px solid var(--gold)' : '1px solid var(--border)',
                       borderRadius: '2px',
                     }}
                   >
@@ -222,10 +224,14 @@ export function CarDetailClient({ car, related }: Props) {
                       >
                         {section.label}
                       </span>
-                      {isOpen
-                        ? <ChevronUp size={14} style={{ color: 'var(--gold)' }} />
-                        : <ChevronDown size={14} style={{ color: 'var(--text-muted)' }} />
-                      }
+                      <ChevronDown
+                        size={14}
+                        style={{
+                          color: isOpen ? 'var(--gold)' : 'var(--text-muted)',
+                          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                          transition: 'transform 0.3s ease'
+                        }}
+                      />
                     </button>
                     {isOpen && (
                       <div className="px-5 pb-5">

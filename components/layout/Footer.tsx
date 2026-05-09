@@ -34,14 +34,23 @@ export function Footer() {
         {/* Top grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           {/* Brand */}
-          <div>
+          <div className="flex flex-col items-start">
             <Link
               href="/"
-              className="text-2xl font-light tracking-[0.15em] uppercase block mb-5"
-              style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)' }}
+              className="uppercase font-light"
+              style={{
+                fontFamily: 'var(--font-display)',
+                background: 'linear-gradient(135deg, #C9A84C 0%, #E2C97E 50%, #C9A84C 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                letterSpacing: '0.2em',
+                fontSize: '24px',
+              }}
             >
               {SITE_CONFIG.brandName}
             </Link>
+            <div className="w-[40px] h-[1px] mt-1 mb-5" style={{ background: '#C9A84C' }} />
             <p className="text-sm leading-relaxed mb-6" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
               India's finest curated luxury pre-owned car dealership. Handpicked. Verified. Delivered.
             </p>
@@ -74,13 +83,13 @@ export function Footer() {
             <h4 className="text-xs tracking-[0.15em] uppercase mb-5 font-medium" style={{ color: 'var(--gold)', fontFamily: 'var(--font-body)' }}>
               Collection
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.collection.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm transition-colors duration-200 hover:text-[var(--gold)]"
-                    style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}
+                    className="uppercase transition-colors duration-200 hover:text-[var(--gold)]"
+                    style={{ color: '#666666', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400, letterSpacing: '0.1em' }}
                   >
                     {link.label}
                   </Link>
@@ -94,13 +103,13 @@ export function Footer() {
             <h4 className="text-xs tracking-[0.15em] uppercase mb-5 font-medium" style={{ color: 'var(--gold)', fontFamily: 'var(--font-body)' }}>
               Services
             </h4>
-            <ul className="space-y-3">
+            <ul className="space-y-4">
               {footerLinks.services.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm transition-colors duration-200 hover:text-[var(--gold)]"
-                    style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}
+                    className="uppercase transition-colors duration-200 hover:text-[var(--gold)]"
+                    style={{ color: '#666666', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400, letterSpacing: '0.1em' }}
                   >
                     {link.label}
                   </Link>
@@ -118,8 +127,8 @@ export function Footer() {
               <li>
                 <a
                   href={`tel:${SITE_CONFIG.phone}`}
-                  className="flex items-start gap-3 text-sm transition-colors duration-200 hover:text-[var(--gold)]"
-                  style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}
+                  className="flex items-start gap-3 transition-colors duration-200 hover:text-[var(--gold)]"
+                  style={{ color: '#666666', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400, letterSpacing: '0.1em' }}
                 >
                   <Phone size={14} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--gold)' }} />
                   {SITE_CONFIG.phone}
@@ -128,21 +137,21 @@ export function Footer() {
               <li>
                 <a
                   href={`mailto:${SITE_CONFIG.email}`}
-                  className="flex items-start gap-3 text-sm transition-colors duration-200 hover:text-[var(--gold)]"
-                  style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}
+                  className="flex items-start gap-3 transition-colors duration-200 hover:text-[var(--gold)]"
+                  style={{ color: '#666666', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400, letterSpacing: '0.1em' }}
                 >
                   <Mail size={14} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--gold)' }} />
                   {SITE_CONFIG.email}
                 </a>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-sm" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
+                <div className="flex items-start gap-3" style={{ color: '#666666', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400, letterSpacing: '0.1em' }}>
                   <MapPin size={14} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--gold)' }} />
                   <span className="leading-relaxed">{SITE_CONFIG.address}</span>
                 </div>
               </li>
               <li>
-                <div className="flex items-start gap-3 text-sm" style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
+                <div className="flex items-start gap-3" style={{ color: '#666666', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400, letterSpacing: '0.1em' }}>
                   <Clock size={14} className="mt-0.5 flex-shrink-0" style={{ color: 'var(--gold)' }} />
                   {SITE_CONFIG.businessHours}
                 </div>
@@ -152,11 +161,11 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="section-divider mb-8" />
+        <div className="w-full h-px mb-8" style={{ background: '#111111' }} />
 
         {/* Bottom */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs" style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}>
+          <p style={{ color: '#444444', fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '0.1em' }}>
             © {year} {SITE_CONFIG.brandName}. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
@@ -164,8 +173,8 @@ export function Footer() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-xs tracking-wide transition-colors duration-200 hover:text-[var(--gold)]"
-                style={{ color: 'var(--text-muted)', fontFamily: 'var(--font-body)' }}
+                className="uppercase transition-colors duration-200 hover:text-[var(--gold)]"
+                style={{ color: '#444444', fontFamily: 'var(--font-body)', fontSize: '11px', letterSpacing: '0.1em' }}
               >
                 {link.label}
               </Link>

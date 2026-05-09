@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import { trackPageTime } from '@/lib/analytics'
+import { trackPageTime } from '@/lib/db/analytics'
 
 export function SessionTracker() {
   const startRef = useRef<number>(Date.now())

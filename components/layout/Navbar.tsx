@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 import { ChevronDown, Menu, X, Phone, Instagram } from 'lucide-react'
 import { SITE_CONFIG } from '@/lib/config'
 import { buildWhatsAppURL, genericEnquiryMessage } from '@/lib/whatsapp'
-import { trackCTAClick } from '@/lib/analytics'
+import { trackCTAClick } from '@/lib/db/analytics'
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
@@ -66,10 +66,11 @@ export function Navbar() {
   return (
     <>
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-200"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
         style={{
-          background: scrolled ? 'rgba(15,15,15,0.97)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          background: scrolled ? 'rgba(8,8,8,0.97)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
           borderBottom: scrolled ? '1px solid rgba(255,255,255,0.06)' : 'none',
         }}
       >
@@ -77,16 +78,16 @@ export function Navbar() {
         <div
           className="hidden md:flex items-center justify-between px-8"
           style={{
-            height: '44px',
-            borderBottom: '1px solid rgba(255,255,255,0.06)',
-            background: 'rgba(0,0,0,0.4)',
+            height: '48px',
+            borderBottom: '1px solid rgba(201,168,76,0.15)',
+            background: scrolled ? 'transparent' : 'rgba(0,0,0,0.4)',
           }}
         >
           <a
             href={`tel:${SITE_CONFIG.phone}`}
             onClick={() => trackCTAClick('call')}
-            className="flex items-center gap-2 text-xs tracking-widest uppercase transition-opacity hover:opacity-80"
-            style={{ color: 'var(--gold)', fontFamily: 'var(--font-body)' }}
+            className="flex items-center gap-2 transition-opacity hover:opacity-80 uppercase"
+            style={{ color: '#C9A84C', fontFamily: 'var(--font-body)', fontSize: '12px', fontWeight: 400, letterSpacing: '0.08em' }}
           >
             <Phone size={12} />
             {SITE_CONFIG.phone}
@@ -94,8 +95,8 @@ export function Navbar() {
           <div className="flex items-center gap-6">
             <Link
               href="/admin/login"
-              className="text-xs tracking-widest uppercase transition-opacity hover:opacity-80"
-              style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}
+              className="uppercase transition-colors duration-300 hover:text-[var(--gold)]"
+              style={{ color: '#A0A0A0', fontFamily: 'var(--font-body)', fontSize: '11px', fontWeight: 400, letterSpacing: '0.12em' }}
             >
               Login
             </Link>
@@ -103,15 +104,26 @@ export function Navbar() {
         </div>
 
         {/* Main nav */}
-        <div className="flex items-center justify-between px-6 md:px-8" style={{ height: '72px' }}>
+        <div className="flex items-center justify-between px-6 md:px-8" style={{ height: '80px' }}>
           {/* Logo */}
-          <Link
-            href="/"
-            className="text-xl font-light tracking-[0.15em] uppercase"
-            style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)' }}
-          >
-            {SITE_CONFIG.brandName}
-          </Link>
+          <div className="flex flex-col items-center">
+            <Link
+              href="/"
+              className="uppercase font-light"
+              style={{
+                fontFamily: 'var(--font-display)',
+                background: 'linear-gradient(135deg, #C9A84C 0%, #E2C97E 50%, #C9A84C 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                letterSpacing: '0.2em',
+                fontSize: '22px',
+              }}
+            >
+              {SITE_CONFIG.brandName}
+            </Link>
+            <div className="w-[40px] h-[1px] mt-1" style={{ background: '#C9A84C' }} />
+          </div>
 
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center gap-7">
@@ -120,10 +132,13 @@ export function Navbar() {
                 <div key={link.label} className="relative" ref={dropdownRef}>
                   <button
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className="flex items-center gap-1 text-xs tracking-widest uppercase transition-colors duration-200"
+                    className="flex items-center gap-1 uppercase transition-colors duration-300"
                     style={{
                       fontFamily: 'var(--font-body)',
-                      color: dropdownOpen ? 'var(--gold)' : 'var(--text-secondary)',
+                      fontSize: '11px',
+                      fontWeight: 400,
+                      letterSpacing: '0.12em',
+                      color: dropdownOpen ? '#C9A84C' : '#A0A0A0',
                     }}
                   >
                     {link.label}
@@ -131,22 +146,29 @@ export function Navbar() {
                       size={12}
                       style={{
                         transform: dropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform 0.2s',
+                        transition: 'transform 0.3s',
                       }}
                     />
                   </button>
 
                   {dropdownOpen && (
                     <div
-                      className="absolute top-full left-1/2 -translate-x-1/2 mt-4 py-3 min-w-[200px] glass"
-                      style={{ borderRadius: '2px' }}
+                      className="absolute top-full left-1/2 -translate-x-1/2 mt-4 py-4 min-w-[220px]"
+                      style={{
+                        background: 'rgba(10,10,10,0.97)',
+                        backdropFilter: 'blur(20px)',
+                        WebkitBackdropFilter: 'blur(20px)',
+                        border: '1px solid rgba(201,168,76,0.12)',
+                        boxShadow: '0 20px 60px rgba(0,0,0,0.8)',
+                        borderRadius: '2px',
+                      }}
                     >
                       {link.dropdown.map((item) => (
-                        <Link
+                         <Link
                           key={item.href}
                           href={item.href}
-                          className="block px-5 py-3 text-xs tracking-widest uppercase transition-colors duration-200 hover:text-[var(--gold)]"
-                          style={{ fontFamily: 'var(--font-body)', color: 'var(--text-secondary)' }}
+                          className="block px-6 py-2 uppercase transition-colors duration-300 hover:text-[#C9A84C]"
+                          style={{ fontFamily: 'var(--font-body)', fontSize: '13px', color: '#A0A0A0' }}
                         >
                           {item.label}
                         </Link>
@@ -158,10 +180,13 @@ export function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="text-xs tracking-widest uppercase transition-colors duration-200"
+                  className="uppercase transition-colors duration-300 hover:text-[#C9A84C]"
                   style={{
                     fontFamily: 'var(--font-body)',
-                    color: isActive(link.href) ? 'var(--gold)' : 'var(--text-secondary)',
+                    fontSize: '11px',
+                    fontWeight: 400,
+                    letterSpacing: '0.12em',
+                    color: isActive(link.href) ? '#C9A84C' : '#A0A0A0',
                   }}
                 >
                   {link.label}
@@ -172,7 +197,29 @@ export function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-4">
-            <Link href="/book-appointment" className="btn-outline-gold text-xs">
+            <Link
+              href="/book-appointment"
+              className="uppercase text-center group"
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '11px',
+                fontWeight: 400,
+                letterSpacing: '0.1em',
+                padding: '10px 20px',
+                color: '#C9A84C',
+                border: '1px solid rgba(201,168,76,0.5)',
+                transition: 'all 0.3s ease',
+                borderRadius: '2px',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#C9A84C';
+                e.currentTarget.style.color = '#080808';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'transparent';
+                e.currentTarget.style.color = '#C9A84C';
+              }}
+            >
               Book Test Drive
             </Link>
           </div>
@@ -192,7 +239,7 @@ export function Navbar() {
       {/* Mobile Drawer Overlay */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm"
           onClick={() => setMobileOpen(false)}
         />
       )}
@@ -201,81 +248,104 @@ export function Navbar() {
       <div
         className="fixed top-0 right-0 bottom-0 z-[70] flex flex-col"
         style={{
-          width: '300px',
-          background: 'var(--bg-surface)',
-          borderLeft: '1px solid var(--border)',
+          width: '320px',
+          background: '#0A0A0A',
+          borderLeft: '1px solid rgba(201,168,76,0.1)',
           transform: mobileOpen ? 'translateX(0)' : 'translateX(100%)',
-          transition: 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transition: 'transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
         }}
       >
         {/* Drawer header */}
         <div
-          className="flex items-center justify-between px-6 py-5"
-          style={{ borderBottom: '1px solid var(--border)' }}
+          className="flex items-center justify-between px-6 py-6"
+          style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}
         >
-          <span
-            className="text-lg font-light tracking-[0.15em] uppercase"
-            style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)' }}
-          >
-            {SITE_CONFIG.brandName}
-          </span>
+          <div className="flex flex-col">
+            <span
+              className="uppercase font-light"
+              style={{
+                fontFamily: 'var(--font-display)',
+                background: 'linear-gradient(135deg, #C9A84C 0%, #E2C97E 50%, #C9A84C 100%)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                letterSpacing: '0.2em',
+                fontSize: '18px',
+              }}
+            >
+              {SITE_CONFIG.brandName}
+            </span>
+            <div className="w-[30px] h-[1px] mt-1" style={{ background: '#C9A84C' }} />
+          </div>
           <button onClick={() => setMobileOpen(false)} aria-label="Close menu">
             <X size={20} style={{ color: 'var(--text-secondary)' }} />
           </button>
         </div>
 
         {/* Drawer links */}
-        <div className="flex-1 overflow-y-auto py-4 px-6">
+        <div className="flex-1 overflow-y-auto py-8 px-6 flex flex-col gap-6">
           {NAV_LINKS.map((link) => (
             <div key={link.label}>
               <Link
                 href={link.href}
-                className="block py-4 text-sm tracking-widest uppercase border-b transition-colors hover:text-[var(--gold)]"
+                className="block uppercase transition-colors"
                 style={{
                   fontFamily: 'var(--font-body)',
-                  color: isActive(link.href) ? 'var(--gold)' : 'var(--text-secondary)',
-                  borderColor: 'var(--border)',
+                  fontSize: '13px',
+                  letterSpacing: '0.12em',
+                  color: isActive(link.href) ? '#C9A84C' : '#A0A0A0',
                 }}
               >
                 {link.label}
               </Link>
-              {link.dropdown?.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block py-3 pl-4 text-xs tracking-widest uppercase border-b transition-colors hover:text-[var(--gold)]"
-                  style={{
-                    fontFamily: 'var(--font-body)',
-                    color: 'var(--text-muted)',
-                    borderColor: 'var(--border)',
-                  }}
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {link.dropdown && (
+                <div className="pl-4 mt-4 flex flex-col gap-4 border-l border-[rgba(255,255,255,0.06)]">
+                  {link.dropdown.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block uppercase transition-colors"
+                      style={{
+                        fontFamily: 'var(--font-body)',
+                        fontSize: '11px',
+                        letterSpacing: '0.1em',
+                        color: '#666666',
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>
 
-        {/* Drawer CTA */}
-        <div className="p-6 flex flex-col gap-3" style={{ borderTop: '1px solid var(--border)' }}>
-          <Link href="/book-appointment" className="btn-gold text-center block">
-            Book Test Drive
-          </Link>
+        {/* Drawer CTA (Pinned to bottom) */}
+        <div className="p-6 flex flex-col gap-4 bg-[#0A0A0A]" style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}>
           <a
             href={buildWhatsAppURL(genericEnquiryMessage)}
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackCTAClick('whatsapp')}
-            className="btn-outline-gold text-center block"
+            className="flex items-center justify-center gap-2 py-3 w-full uppercase transition-all duration-300"
+            style={{
+              background: '#25D366',
+              color: '#FFFFFF',
+              fontFamily: 'var(--font-body)',
+              fontSize: '12px',
+              fontWeight: 500,
+              letterSpacing: '0.1em',
+              borderRadius: '2px',
+            }}
           >
             WhatsApp Us
           </a>
           <a
             href={`tel:${SITE_CONFIG.phone}`}
             onClick={() => trackCTAClick('call')}
-            className="flex items-center justify-center gap-2 py-3 text-xs tracking-widest uppercase transition-opacity hover:opacity-70"
-            style={{ color: 'var(--gold)', fontFamily: 'var(--font-body)' }}
+            className="flex items-center justify-center gap-2 py-2 text-center uppercase"
+            style={{ color: '#C9A84C', fontFamily: 'var(--font-body)', fontSize: '12px', letterSpacing: '0.08em' }}
           >
             <Phone size={12} />
             {SITE_CONFIG.phone}

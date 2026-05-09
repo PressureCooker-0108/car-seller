@@ -1,9 +1,10 @@
 import Link from 'next/link'
-import { allCars } from '@/data/cars'
+import { fetchCars } from '@/lib/db/cars'
 import { CarCard } from '@/components/ui/CarCard'
 import { FadeUp, StaggerChildren, StaggerItem, GoldReveal } from '@/components/animations'
 
-export function FeaturedCollection() {
+export async function FeaturedCollection() {
+  const allCars = await fetchCars()
   const featured = allCars.filter(c => c.status === 'available').slice(0, 6)
 
   return (

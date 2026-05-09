@@ -63,10 +63,10 @@ export function About() {
           <FadeIn delay={0.3}>
             <div className="grid grid-cols-2 gap-6">
               {[
-                { value: SITE_CONFIG.totalCustomers, suffix: '+', label: 'Happy Customers' },
-                { value: SITE_CONFIG.totalCars, suffix: '+', label: 'Cars Delivered' },
-                { value: 8, suffix: '+', label: 'Years Experience' },
-                { value: 100, suffix: '%', label: 'Verified Listings' },
+                { value: 7600, suffix: '+', label: 'Clients Served' },
+                { value: 70, suffix: '+', label: 'Vehicles Sold' },
+                { value: 100, suffix: '%', label: 'Verified Cars' },
+                { value: 5, suffix: '+', label: 'Years Legacy' },
               ].map((stat) => (
                 <div
                   key={stat.label}

@@ -43,10 +43,10 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 py-16 border-t border-b border-[var(--border)] mb-24">
             {[
-              { value: SITE_CONFIG.totalCustomers, suffix: '+', label: 'Clients Served' },
-              { value: SITE_CONFIG.totalCars, suffix: '+', label: 'Vehicles Sold' },
+              { value: 7600, suffix: '+', label: 'Clients Served' },
+              { value: 70, suffix: '+', label: 'Vehicles Sold' },
               { value: 100, suffix: '%', label: 'Verified Cars' },
-              { value: 8, suffix: '+', label: 'Years Legacy' },
+              { value: 5, suffix: '+', label: 'Years Legacy' },
             ].map((stat, i) => (
               <FadeUp key={stat.label} delay={i * 0.1} className="text-center">
                 <div className="text-5xl md:text-6xl font-light mb-3" style={{ fontFamily: 'var(--font-display)', color: 'var(--gold)' }}>

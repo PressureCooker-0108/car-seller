@@ -22,6 +22,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.push('/admin/login')
   }
 
+  if (pathname === '/admin/login') {
+    return <>{children}</>
+  }
+
   return (
     <div className="flex min-h-screen" style={{ background: 'var(--bg-primary)' }}>
       {/* Sidebar */}
